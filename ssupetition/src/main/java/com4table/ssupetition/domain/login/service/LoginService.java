@@ -23,17 +23,18 @@ public class LoginService {
         User user = userRepository.findByLoginId(id).orElse(null);
 
         if (user == null) {
+            log.info("user 존재하지 않음");
+
+
             // 유저가 존재하지 않으면 유세인트에서 정보 크롤링
             USaintCrawler.UserInfo userInfo = uSaintCrawler.loginAndGetInfo(id, password).getUserInfo();
-
-            log.info("user 존재하지 않음");
 
             // 새로운 유저 생성 및 저장
             if (userInfo != null) {
                 user = User.builder()
-                        .loginId(id)
-                        .major(id)
-                        .name(id)
+                        .loginId(userInfo.getLoginId())
+                        .major(userInfo.getUserMajor())
+                        .name(user.getName())
                         .build();
 //                user = User.builder()
 //                        .loginId(userInfo.getLoginId())
@@ -42,18 +43,18 @@ public class LoginService {
 //                        .build();
                 userRepository.save(user);
             } else {
-                user = User.builder()
-                        .loginId(id)
-                        .major(id)
-                        .name(id)
-                        .build();
-                userRepository.save(user);            }
+                log.info("로그인 실패");
+                return null;
+            }
         } else {
             log.info("user 존재");
+            if(!uSaintCrawler.userCheck(id, password)){
+                log.info("비밀번호 틀림");
+                return null;
+            }
         }
 
         // 세션을 통한 로그인 로직 (생략)
-
         return user;
     }
 }

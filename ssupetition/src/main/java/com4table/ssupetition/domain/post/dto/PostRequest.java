@@ -5,12 +5,14 @@ import com4table.ssupetition.domain.post.enums.Category;
 import com4table.ssupetition.domain.post.enums.Type;
 import com4table.ssupetition.domain.user.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 public class PostRequest {
+
 
     @Getter
     @NoArgsConstructor
@@ -20,10 +22,8 @@ public class PostRequest {
         private String content;
         private String categoryId;
         private String typeId;
-//        private Category category;
-//        private Type type;
 
-        public Post toEntity(User user, List<Double> embedding) {
+        public Post toEntity(User user) {
             return Post.builder()
                     .user(user)
                     .postCategory(Category.valueOf(categoryId))
@@ -33,7 +33,6 @@ public class PostRequest {
                     .disagree(0L)
                     .title(title)
                     .content(content)
-                    .embedding(embedding)
                     .build();
         }
     }
