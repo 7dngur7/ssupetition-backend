@@ -2,9 +2,6 @@ package com4table.ssupetition.domain.login.controller;
 
 import com4table.ssupetition.domain.login.dto.LoginRequest;
 import com4table.ssupetition.domain.login.service.LoginService;
-import com4table.ssupetition.domain.post.domain.Post;
-import com4table.ssupetition.domain.post.dto.PostRequest;
-import com4table.ssupetition.domain.post.service.PostService;
 import com4table.ssupetition.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
